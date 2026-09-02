@@ -1,6 +1,6 @@
 resource "aws_instance" "day1" {
-    ami = variable.aws_ami
-    instance_type = variable.instance_type
+    ami = var.aws_ami
+    instance_type = var.instance_type
     user_data = file("/home/ubuntu/Terraform-Day1/user.sh")
     vpc_security_group_ids = [aws_security_group.sg.id]
 
@@ -25,14 +25,14 @@ resource "aws_security_group" "sg" {
    ingress {
     from_port = 80
     to_port = 80
-    protocol = "http"
+    protocol = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
    }
 
    ingress {
     from_port = 443
     to_port = 443
-    protocol = "https"
+    protocol = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
    }
 
