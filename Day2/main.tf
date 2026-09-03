@@ -118,3 +118,16 @@ resource "aws_instance" "my_ec2" {
         Name = "Day2_terraform"
     }
 }
+
+resource "aws_instance" "my_ec2_private" {
+    ami = var.aws_ami
+    instance_type = var.instance_type
+    user_data = file("/home/ubuntu/Terraform-Day1/user.sh")
+    vpc_security_group_ids = [aws_security_group.sg.id]
+    subnet_id = aws_subnet.private_subnet.id
+    key_name = "kapishh"
+
+    tags ={
+        Name = "Day2_terraform_private"
+    }
+}
