@@ -9,7 +9,6 @@ resource "aws_vpc" "custom_vpc" {
 
 }
  resource "aws_nat_gateway" "nat_gw" {
-    vpc_id = aws_vpc.custom_vpc.id
     allocation_id = aws_eip.nat_eip.id
     subnet_id = aws_subnet.private_subnet.id
     tags = {
