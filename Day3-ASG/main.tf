@@ -47,6 +47,7 @@ resource "aws_launch_template" "my-launch-template"{
      instance_type = var.instance_type
      key_name = "kapishh"
      vpc_security_group_ids = [aws_security_group.sg.id]
+     user_data = filebase64("/home/ubuntu/Terraform-Day1/Day3-ASG/user_data.sh")
     tags = {
         name = "my-launch-template"
     }
