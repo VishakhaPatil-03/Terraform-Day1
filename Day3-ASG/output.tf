@@ -9,3 +9,6 @@ output "target_group_arn" {
     value = aws_lb_target_group.my-target-group.arn
 }
  
+output "load_balancer_dns_name" {
+    value = aws_lb.my-load-balancer.dns_name
+}
