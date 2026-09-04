@@ -2,8 +2,11 @@ data "aws_vpc" "default" {
     default = true
 }
 
-data "aws_subnet_ids" "default" {
-    vpc_id = data.aws_vpc.default.id
+data "aws_subnets" "default" {
+  filter {
+    name   = "vpc-id"
+    values = [data.aws_vpc.default.id]
+  }
 }
 
 resource "aws_security_group" "sg" {
@@ -69,7 +72,7 @@ resource "aws_lb" "my-load-balancer" {
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.sg.id]
-  subnets            = data.aws_subnet_ids.default.ids
+  subnets            = data.aws_subnets.default.ids
 
   enable_deletion_protection = false
 }
@@ -89,7 +92,7 @@ resource "aws_autoscaling_group" "my-asg" {
   desired_capacity     = 2
   max_size             = 3
   min_size             = 1
-  vpc_zone_identifier  = data.aws_subnet_ids.default.ids
+  vpc_zone_identifier  = data.aws_subnets.default.ids
   launch_template {
     id      = aws_launch_template.my-launch-template.id
     version = "$Latest"
