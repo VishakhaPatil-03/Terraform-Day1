@@ -1,22 +1,22 @@
 module "vpc" {
-    source = "./module/vpc"
-    vpc_cidr = "10.0.0.0/16"
-    public_subnet_cidr = "10.0.0.0/22"
-    private_subnet_cidr =  "10.0.4.0/22"
-    public_subnet_az = "ap-southeast-1a"
-    private_subnet_az = "ap-southeast-1b"
-    sg_name = "my-sg"
-    http_port = 80
-    ssh_port = 22
+    source ="./module/vpc"
+    vpc_cidr = var.vpc_cidr
+    public_subnet_cidr =var.public_subnet_cidr
+    private_subnet_cidr = var.private_subnet_cidr
+    public_az = var.public_az
+    private_az = var.private_az
+    sg_name = var.sg_name
+    http_port = var.http_port
+    ssh_port = var.ssh_port
 }
 
-module "ec2"{
+module "ec2" {
     source = "./module/ec2"
-    ami = "ami-0532913178263be11"
-    instance_type = "t3.micro"
-    key_name = "kapishh"
-    sg_id = module.vpc.vpc_id
+    ami = var.ami
+    instance_type = var.instance_type
+    key_name = var.key_name
     private_subnet_id = module.vpc.private_subnet_id
     public_subnet_id = module.vpc.public_subnet_id
+    sg_id = module.vpc.sg_id
 
 }
