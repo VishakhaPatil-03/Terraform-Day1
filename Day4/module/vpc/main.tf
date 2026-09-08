@@ -32,7 +32,7 @@ resource "aws_internet_gateway" "IGW" {
 }
 
 resource "aws_eip" "nat_eip" {
-    domain = true
+    domain = "vpc"
     tags = {
         Name = "nat_eip"
     }
